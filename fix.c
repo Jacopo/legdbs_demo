@@ -18,6 +18,12 @@ void fixit(int sig, siginfo_t *info, struct ucontext *ctx)
         PRINT("[X] INTERCEPTED!!!!\n");
         strcpy(argv[1], "SHELF"); // Sneaky change :)
     }
+
+    // Or maybe exit_group() / log / do whatever you want
+
+    //int fd = open("/tmp/fix.log", O_CREAT|O_WRONLY|O_APPEND, 0666); VS(fd);
+    //write(fd, &X, sizeof(X));
+    //close(fd);
 }
 
 void before_entry()

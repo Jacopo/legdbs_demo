@@ -9,6 +9,7 @@ void fixit(int sig, siginfo_t *info, struct ucontext *ctx)
     PRINT("[ ] Breakpoint hit at main(): %p\n", info->si_addr);
 
     uint32_t *esp = (uint32_t*) ctx->uc_mcontext.esp;
+    uint32_t caller = esp[0];
     int argc = esp[1];
     char** argv = (char**) esp[2];
 
@@ -19,11 +20,16 @@ void fixit(int sig, siginfo_t *info, struct ucontext *ctx)
         strcpy(argv[1], "SHELF"); // Sneaky change :)
     }
 
-    // Or maybe exit_group() / log / do whatever you want
+    // Or exit_group() / log / react to not-previously-seen states / do whatever you want
 
-    //int fd = open("/tmp/fix.log", O_CREAT|O_WRONLY|O_APPEND, 0666); VS(fd);
-    //write(fd, &X, sizeof(X));
-    //close(fd);
+    // Example of logging
+    int fd = open("/tmp/calls.log", O_CREAT|O_WRONLY|O_APPEND, 0666); VS(fd);
+    write(fd, (uint8_t*) &caller, 4);
+    { uint8_t c = ' '; write(fd, &c, 1); }
+    if (argc > 1) // (logging post-change)
+        write(fd, argv[1], strlen(argv[1]));
+    { uint8_t c = '\n'; write(fd, &c, 1); }
+    close(fd);
 }
 
 void before_entry()

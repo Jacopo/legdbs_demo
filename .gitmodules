@@ -1,9 +1,9 @@
 [submodule "legdbs"]
 	path = legdbs
-	url = git@git.seclab.cs.ucsb.edu:shellphish/legdbs.git
+	url = https://github.com/Jacopo/legdbs/
 [submodule "elf_add_code"]
 	path = elf_add_code
-	url = git@git.seclab.cs.ucsb.edu:shellphish/elf_add_code.git
+	url = https://github.com/Jacopo/elf_add_code/
 [submodule "inline-notlibc"]
 	path = inline-notlibc
-	url = git@git.seclab.cs.ucsb.edu:shellphish/inline-notlibc.git
+	url = https://github.com/Jacopo/inline-notlibc/
